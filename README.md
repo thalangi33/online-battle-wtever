@@ -1,1 +1,1 @@
-online-battle-whatever is a website that is owned by Danny Sze.
+online-battle-whatever is a website that is owned by Danny Sze & Thalang jai.
