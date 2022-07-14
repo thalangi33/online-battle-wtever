@@ -1,7 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Home from './pages/Home';
+import React from 'react'
+import Home from './pages/Home'
+import './App.css'
 
 function App() {
   return (
@@ -11,4 +10,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
