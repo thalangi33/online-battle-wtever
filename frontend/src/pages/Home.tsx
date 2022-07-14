@@ -1,13 +1,13 @@
-import React from 'react'
-import './Home.sass'
-import VirtualKeyboard  from '../components/VirtualKeyboard/VirtualKeyboard'
+import React from "react";
+import "./Home.sass";
+import VirtualKeyboard from "../components/VirtualKeyboard/VirtualKeyboard";
 
 const Home = () => {
   return (
-    <div>
+    <main>
       <VirtualKeyboard />
-    </div>
-  )
-}
+    </main>
+  );
+};
 
-export default Home
+export default Home;

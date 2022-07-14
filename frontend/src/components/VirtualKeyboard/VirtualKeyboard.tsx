@@ -1,22 +1,22 @@
 import React, { FunctionComponent, MouseEventHandler } from "react";
-import { KeysArray } from "../../assets/const";
-import "./VirtualKeyboard.sass";
+import { KEYS_ARRAY } from "../../assets/const";
+import "./VirtualKeyboard.scss";
 
 const VirtualKeyboard: FunctionComponent = () => {
-  const onKeyDownEventHandler: MouseEventHandler = (e: any) => {
+  const onClickHandler: MouseEventHandler = (e: any) => {
     console.log(e);
   };
 
   return (
-    <div>
-      {KeysArray.map((keys, index) => {
+    <div className="virtual-keyboard">
+      {KEYS_ARRAY.map((keys, index) => {
         return (
           <div key={index} className="virtual-key-row">
             {keys.map((key, idx) => (
               <VirtualKey
                 key={idx}
                 label={key}
-                onKeyDownEventHandler={onKeyDownEventHandler}
+                onClickHandler={onClickHandler}
               />
             ))}
           </div>
@@ -28,10 +28,10 @@ const VirtualKeyboard: FunctionComponent = () => {
 
 const VirtualKey: FunctionComponent<VirtualKeyProps> = ({
   label,
-  onKeyDownEventHandler,
+  onClickHandler,
 }) => {
   return (
-    <button onClick={onKeyDownEventHandler} className="virtual-key">
+    <button onClick={onClickHandler} className="virtual-key">
       {label}
     </button>
   );
@@ -39,7 +39,7 @@ const VirtualKey: FunctionComponent<VirtualKeyProps> = ({
 
 interface VirtualKeyProps {
   label: string;
-  onKeyDownEventHandler: MouseEventHandler;
+  onClickHandler: MouseEventHandler;
 }
 
 export default VirtualKeyboard;

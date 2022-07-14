@@ -1,0 +1,25 @@
+.virtual-keyboard {
+  width: 50%;
+  margin: 0 auto;
+
+  .virtual-key-row {
+    display: flex;
+    justify-content: center;
+    column-gap: 5px;
+    margin-block: 5px;
+  }
+
+  .virtual-key {
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex: 1;
+    background: #d3d6da;
+    color: #000;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+}
