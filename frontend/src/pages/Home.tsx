@@ -1,11 +1,11 @@
 import React from 'react'
-import Word_UI from '../components/Word_UI/Word_UI'
+import WordUI from '../components/WordUI/WordUI'
 
 
 const Home = () => {
   return (
     <div>
-        <Word_UI />
+        <WordUI />
     </div>
   )
 }
