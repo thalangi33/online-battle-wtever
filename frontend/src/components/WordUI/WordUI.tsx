@@ -1,8 +1,9 @@
 import React from 'react'
 import './WordUI.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import * as ReactDOM from 'react-dom';
 
-const Word_UI = () => {
+const WordUI = () => {
 
     const [guess, setGuess] = useState(["", "", "", "", "", ""]);
 
@@ -10,12 +11,64 @@ const Word_UI = () => {
 
     const [turn, setTurn] = useState(0);
 
+    let correctAnsIndex: Array<number> = [0, 0, 0, 0, 0, 0];
+
+    let guessIndex: Array<number> = [0, 0, 0, 0, 0, 0];
+
+    const ref = useRef<HTMLDivElement>(null);
+
+    const correctAns: string = "apple";
+
+
     // function wordInputHandler (e: React.FormEvent<HTMLInputElement>) {
     //     const result: string = e.currentTarget.value.replace(/[^a-z]/gi, '');
     //     console.log(result);
     //     setAnswer(result);
     //     console.log("hello");
     // }
+
+    function turnColorGreen (num: number) {
+      if ((ref.current?.children as HTMLCollectionOf<HTMLElement>)[turn].children[num] != null){
+        ((ref.current?.children as HTMLCollectionOf<HTMLElement>)[turn].children as HTMLCollectionOf<HTMLElement>)[num].style.backgroundColor = "#538d4e"
+      }
+    }
+
+    function turnColorYellow (num: number) {
+      if ((ref.current?.children as HTMLCollectionOf<HTMLElement>)[turn].children[num] != null){
+        ((ref.current?.children as HTMLCollectionOf<HTMLElement>)[turn].children as HTMLCollectionOf<HTMLElement>)[num].style.backgroundColor = "#b59f3b"
+      }
+    }
+
+    function checkingAns (guess: Array<string>, correctAns: string, turn: number) {
+
+      // Setting green boxes
+      for (let i = 0; i < correctAns.length; i++){
+        if (guess[turn][i] === correctAns[i]){
+          console.log(ref.current?.children[turn]);
+          
+          correctAnsIndex[i] = 1;
+          guessIndex[i] = 1;
+
+          turnColorGreen(i);  
+        }
+      }
+
+      // Setting yellow boxes
+      for (let i = 0; i < 5; i++){
+        if (guessIndex[i] === 0){
+          for (let j = 0; j < 5; j++){
+            if (correctAnsIndex[j] === 0){
+              if (guess[turn][i] === correctAns[j]){
+                turnColorYellow(i);
+                correctAnsIndex[j] = 1;
+              }
+            }
+          }
+        }
+      }
+
+
+    }
 
     function detectKeyDown (e: KeyboardEvent) {
       console.log("Clicked key: ", e.keyCode);
@@ -32,6 +85,9 @@ const Word_UI = () => {
         if (answer.length == 5){
           setTurn(turn + 1);
           console.log("the answer length is 5: " + answer.length );
+
+          checkingAns(guess, correctAns, turn);
+
           setAnswer("");
           return;
         }
@@ -85,8 +141,8 @@ const Word_UI = () => {
   return (
     <div className="Word_UI-container">
       {/* <input className="ans" autoFocus type="text" onInput={wordInputHandler} value={answer} maxLength={5}/> */}
-      <div className='tile-box'>
-        <div className='tile-row'>
+      <div ref={ref} className='tile-box'>
+        <div ref={ref} className='tile-row'>
           <div className='tile guess-1-1'>{guess[0].slice(0,1)}</div>
           <div className='tile guess-1-2'>{guess[0].slice(1,2)}</div>
           <div className='tile guess-1-3'>{guess[0].slice(2,3)}</div>
@@ -133,4 +189,4 @@ const Word_UI = () => {
   )
 }
 
-export default Word_UI
+export default WordUI
