@@ -1,9 +1,13 @@
 import React from 'react'
 import './WordUI.css';
 import { useState, useEffect, useRef } from 'react';
-import * as ReactDOM from 'react-dom';
 
-const WordUI = () => {
+interface wordArray {
+  wordleDictionary: Array<string>;
+}
+
+
+const WordUI = (props:wordArray) => {
 
     const [guess, setGuess] = useState(["", "", "", "", "", ""]);
 
@@ -17,15 +21,18 @@ const WordUI = () => {
 
     const ref = useRef<HTMLDivElement>(null);
 
-    const correctAns: string = "apple";
+    const wordleDictionary: Array<string> = props.wordleDictionary;
 
+    const [correctAns, setCorrectAns] = useState(wordleDictionary[Math.floor(Math.random()*wordleDictionary.length)]);
 
-    // function wordInputHandler (e: React.FormEvent<HTMLInputElement>) {
-    //     const result: string = e.currentTarget.value.replace(/[^a-z]/gi, '');
-    //     console.log(result);
-    //     setAnswer(result);
-    //     console.log("hello");
-    // }
+    console.log("This is the word to guess: " + correctAns);
+
+    function checkWordleDictionary (guess: string, wordleDictionary: Array<String>){
+      if (wordleDictionary.includes(guess)){
+        return true;
+      }
+      return false;
+    }
 
     function turnColorGreen (num: number) {
       if ((ref.current?.children as HTMLCollectionOf<HTMLElement>)[turn].children[num] != null){
@@ -83,13 +90,20 @@ const WordUI = () => {
           return;
         }
         if (answer.length == 5){
-          setTurn(turn + 1);
-          console.log("the answer length is 5: " + answer.length );
+          if (checkWordleDictionary(answer, wordleDictionary)){
+            setTurn(turn + 1);
+            console.log("the answer length is 5: " + answer.length );
 
-          checkingAns(guess, correctAns, turn);
+            checkingAns(guess, correctAns, turn);
 
-          setAnswer("");
-          return;
+            setAnswer("");
+
+            return;
+          } else {
+            console.log("The word does not exist");
+
+            return;
+          }
         }
       }
 
