@@ -20,7 +20,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --converage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,6 +46,7 @@
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-sass": "^5.1.0",
-    "sass": "^1.53.0"
+    "sass": "^1.53.0",
+    "ts-jest": "^28.0.7"
   }
 }
