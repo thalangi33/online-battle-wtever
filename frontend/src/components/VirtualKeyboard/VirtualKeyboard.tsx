@@ -1,5 +1,5 @@
 import React, { FunctionComponent, MouseEventHandler } from "react";
-import { KEYS_ARRAY } from "../../assets/const";
+import { KEYS_ARRAY } from "assets/const";
 import "./VirtualKeyboard.scss";
 
 const VirtualKeyboard: FunctionComponent = () => {
