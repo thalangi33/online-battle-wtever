@@ -1,5 +1,5 @@
 # workflow name
-name: React Tests
+name: Node Server Tests
 
 # execute on events
 on:
@@ -7,7 +7,7 @@ on:
     branches:
       - "main"
       - "dev"
-      - "frontend/**"
+      - "backend/**"
   pull_request:
     types:
       - opened
@@ -15,19 +15,19 @@ on:
     branches:
       - "main"
       - "dev"
-      - "frontend/**"
+      - "backend/**"
     paths:
-      - "frontend/**"
+      - "backend/**"
 
 # jobs to run
 jobs:
   # install dependencies and run test command
   test:
-    name: Frontend Test
+    name: Backend Test
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend
+        working-directory: backend
     steps:
       # 1: setup node
       - name: Setup Node.js
