@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import WordUI from '../components/WordUI/WordUI'
-
 
 const Home = () => {
   
@@ -2320,6 +2319,9 @@ const Home = () => {
     'zesty',
     'zonal',
     ];
+
+    
+
 
     return (
       <div>

@@ -1,13 +1,14 @@
 import React from 'react'
 import './WordUI.css';
 import { useState, useEffect, useRef } from 'react';
+import EndgamePopup from "../EndgamePopup/EndgamePopup"
 
-interface wordArray {
+interface word {
   wordleDictionary: Array<string>;
 }
 
 
-const WordUI = (props:wordArray) => {
+const WordUI = (props:word) => {
 
     const [guess, setGuess] = useState(["", "", "", "", "", ""]);
 
@@ -23,7 +24,10 @@ const WordUI = (props:wordArray) => {
 
     const wordleDictionary: Array<string> = props.wordleDictionary;
 
-    const [correctAns, setCorrectAns] = useState(wordleDictionary[Math.floor(Math.random()*wordleDictionary.length)]);
+    const [correctAns, setCorrectAns] = useState("apple");
+
+    const [finishedGame, setFinishedGame] = useState(false)
+    const [guessCorrectAns, setGuessCorrectAns] = useState(false)
 
     console.log("This is the word to guess: " + correctAns);
 
@@ -32,6 +36,13 @@ const WordUI = (props:wordArray) => {
         return true;
       }
       return false;
+    }
+
+    function checkCorrectAns (correctAnsIndex: Array<number>) {
+      if (correctAnsIndex[0] === 1 && correctAnsIndex[1] === 1 && correctAnsIndex[2] === 1 && correctAnsIndex[3] === 1 && correctAnsIndex[4] === 1) {
+        return true
+      }
+      return false
     }
 
     function turnColorGreen (num: number) {
@@ -59,7 +70,12 @@ const WordUI = (props:wordArray) => {
           turnColorGreen(i);  
         }
       }
-
+      
+      // If all green, return true, implying have found correct ans
+      if (checkCorrectAns(correctAnsIndex)){
+        return true
+      }
+      
       // Setting yellow boxes
       for (let i = 0; i < 5; i++){
         if (guessIndex[i] === 0){
@@ -74,6 +90,8 @@ const WordUI = (props:wordArray) => {
         }
       }
 
+      // If all not green, return false, implying have not found correct ans
+      return false
 
     }
 
@@ -84,21 +102,38 @@ const WordUI = (props:wordArray) => {
       let temp: string;
       let tempArray: string[];
 
+      // Check when user press enter
       if (charCode == 13){
+        // if user types less than 5 letter words
         if (answer.length != 5){
           console.log("the answer length is not 5: " + answer.length );
           return;
         }
+        // if user types 5 letter words
         if (answer.length == 5){
+          // check if the word exits
           if (checkWordleDictionary(answer, wordleDictionary)){
+            // Go next turn
             setTurn(turn + 1);
             console.log("the answer length is 5: " + answer.length );
 
-            checkingAns(guess, correctAns, turn);
+            // if the answer is correct
+            if (checkingAns(guess, correctAns, turn) === true){
+              console.log("You have found the correct ans!!!")
+              setFinishedGame(true)
+              setGuessCorrectAns(true)
+              return
+            }
+            if (checkingAns(guess, correctAns, turn) === false && turn === 5){
+              console.log("Sorry all your guesses were wrong")
+              setFinishedGame(true)
+              setGuessCorrectAns(false)
+              return
+            }
 
             setAnswer("");
-
             return;
+
           } else {
             console.log("The word does not exist");
 
@@ -143,17 +178,20 @@ const WordUI = (props:wordArray) => {
     }
 
     useEffect(() => {
-      document.addEventListener('keydown', detectKeyDown, true);
-      console.log("This is the answer now: " + answer);
-      console.log("This is the guess now: " + guess[turn]);
+      if (finishedGame === false) {
+        document.addEventListener('keydown', detectKeyDown, true);
+        console.log("This is the answer now: " + answer);
+        console.log("This is the guess now: " + guess[turn]);
 
-      return () => {
-        document.removeEventListener('keydown', detectKeyDown, true);
-      }
-    }, [answer]);
+        return () => {
+          document.removeEventListener('keydown', detectKeyDown, true);
+        }}
+
+    }, [answer, finishedGame]);
 
   return (
     <div className="Word_UI-container">
+      { finishedGame && <EndgamePopup guessCorrectAns={guessCorrectAns}/> }
       {/* <input className="ans" autoFocus type="text" onInput={wordInputHandler} value={answer} maxLength={5}/> */}
       <div ref={ref} className='tile-box'>
         <div ref={ref} className='tile-row'>
