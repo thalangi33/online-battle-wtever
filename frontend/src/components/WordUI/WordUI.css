@@ -1,0 +1,46 @@
+.ans {
+    /* border: none; */
+    color: black;
+    user-select: none;
+}
+
+.ans:focus {
+    outline: none;
+}
+
+.Word_UI-container {
+    background-color: #121213;;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.tile-box {
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 5px;
+    padding: 10px;
+}
+
+.tile-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 5px;
+}
+
+.tile {
+    color: #ffffff;
+    font-size: 2.5rem;
+    border: 2px solid #565758;;
+    line-height: -1rem;
+    height: 4rem;
+    width:  4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+}
