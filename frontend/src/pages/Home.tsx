@@ -1,3 +1,4 @@
+import VirtualKeyboard from 'components/VirtualKeyboard/VirtualKeyboard';
 import React, { useState } from 'react'
 import WordUI from '../components/WordUI/WordUI'
 

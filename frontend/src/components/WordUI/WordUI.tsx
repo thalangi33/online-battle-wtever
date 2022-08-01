@@ -1,3 +1,4 @@
+import VirtualKeyboard from 'components/VirtualKeyboard/VirtualKeyboard';
 import React from "react";
 import "./WordUI.css";
 import { useState, useEffect, useRef } from "react";
@@ -118,6 +119,11 @@ const WordUI = (props: word) => {
     console.log("Clicked key: ", e.keyCode);
 
     var charCode = e.keyCode;
+
+    gameLogic(charCode, e.key)
+  }
+
+  function gameLogic(charCode: number, key: string){
     let temp: string;
     let tempArray: string[];
 
@@ -151,6 +157,7 @@ const WordUI = (props: word) => {
           }
 
           setAnswer("");
+          console.log("Running")
           return;
         } else {
           console.log("The word does not exist");
@@ -179,13 +186,13 @@ const WordUI = (props: word) => {
         (charCode > 96 && charCode < 123)
       ) {
         if (answer === "") {
-          temp = e.key;
+          temp = key;
           setAnswer(temp);
           tempArray = [...guess];
           tempArray[turn] = temp;
           setGuess(tempArray);
         } else {
-          temp = answer + e.key;
+          temp = answer + key;
           setAnswer(temp);
           tempArray = [...guess];
           tempArray[turn] = temp;
@@ -315,6 +322,7 @@ const WordUI = (props: word) => {
           </div>
         </div>
       </div>
+      <VirtualKeyboard gameLogic={gameLogic}/>
     </div>
   );
 };
