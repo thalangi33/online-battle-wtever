@@ -1,11 +1,26 @@
 import React, { FunctionComponent, MouseEventHandler } from "react";
-import { KEYS_ARRAY } from "assets/const";
+import { KEYS_ARRAY} from "assets/const";
 import "./VirtualKeyboard.scss";
 
-const VirtualKeyboard: FunctionComponent = () => {
+interface gameFunction {
+  gameLogic: Function
+}
+
+const VirtualKeyboard = (props: gameFunction) => {
   const onClickHandler: MouseEventHandler = (e: any) => {
     console.log(e);
   };
+  const exampleFunction = (key: string) => {
+    console.log("This is key: " + key.charCodeAt(0));
+  }
+  const convertKeyToKeycode = (key: string) => {
+    if (key === "ENTER")
+      return 13
+    else if (key === "BACKSPACE")
+      return 8
+    else 
+      return key.charCodeAt(0)
+  }
 
   return (
     <div className="virtual-keyboard">
@@ -16,7 +31,7 @@ const VirtualKeyboard: FunctionComponent = () => {
               <VirtualKey
                 key={idx}
                 label={key}
-                onClickHandler={onClickHandler}
+                onClickHandler={() => {{props.gameLogic(convertKeyToKeycode(key), key.toLowerCase()); exampleFunction(key)}}}
               />
             ))}
           </div>
@@ -31,7 +46,7 @@ const VirtualKey: FunctionComponent<VirtualKeyProps> = ({
   onClickHandler,
 }) => {
   return (
-    <button onClick={onClickHandler} className="virtual-key">
+    <button onMouseDown={onClickHandler} className="virtual-key">
       {label}
     </button>
   );
