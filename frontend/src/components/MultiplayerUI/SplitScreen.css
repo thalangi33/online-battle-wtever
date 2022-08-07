@@ -1,0 +1,17 @@
+.split-screen {
+    background-color: #121213;;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    flex-direction: row;
+}
+
+.screen-1 {
+
+}
+
+.screen-2 {
+    display: flex;
+
+}

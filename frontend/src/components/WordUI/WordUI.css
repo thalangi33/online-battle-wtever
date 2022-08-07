@@ -18,6 +18,7 @@
     flex-direction: column;
 }
 
+
 .tile-box {
     display: grid;
     grid-template-rows: repeat(6, 1fr);

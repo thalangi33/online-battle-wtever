@@ -1,11 +1,11 @@
-import VirtualKeyboard from 'components/VirtualKeyboard/VirtualKeyboard';
-import React, { useState } from 'react'
-import WordUI from '../components/WordUI/WordUI'
-import SplitScreen from 'components/MultiplayerUI/SplitScreen';
+import React from 'react'
+import WordUI from 'components/WordUI/WordUI'
+import TileBox from 'components/TileBox/TileBox'
+import "./SplitScreen.css";
 
-const Home = () => {
-  
-  const wordleDictionary = ['aback',
+const SplitScreen = () => {
+
+    const wordleDictionary = ['aback',
     'abase',
     'abate',
     'abbey',
@@ -2322,14 +2322,16 @@ const Home = () => {
     'zonal',
     ];
 
-    
-
-
-    return (
-      <div>
-          <SplitScreen />
-      </div>
-    )
+  return (
+    <div className='split-screen'>
+        <div className='screen screen-1'>
+            <WordUI wordleDictionary={wordleDictionary}/>
+        </div>
+        <div className='screen screen-2'>
+            <TileBox />
+        </div>
+    </div>
+  )
 }
 
-export default Home
+export default SplitScreen
