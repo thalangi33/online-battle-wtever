@@ -9,7 +9,7 @@ const createUser = async (req: Request, res: Response) => {
     await newUser.save();
   } catch (err: any) {
     // console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(err.message);
   }
   return res.send(`Successfully created user ${name}`);
 };
@@ -23,7 +23,7 @@ const getAllUsers = async (req: Request, res: Response) => {
     users = docs.slice();
   } catch (err: any) {
     // console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(err.message);
   }
   // console.log(users);
   return res.send(users);
@@ -33,9 +33,12 @@ const updateUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const { name } = req.body;
   try {
-    await User.updateOne({ name: userId }, { name: name });
+    if (!name) throw new Error("Name cannot be empty");
+    let result: any = await User.updateOne({ name: userId }, { name: name });
+    // console.log(result);
+    if (result?.modifiedCount === 0) throw new Error("No matching user found");
   } catch (err: any) {
-    return res.status(400).send(err);
+    return res.status(400).send(err.message);
   }
   return res.send(`Successfully update ${userId} -> ${name}`);
 };
@@ -43,9 +46,11 @@ const updateUser = async (req: Request, res: Response) => {
 const deleteUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
   try {
-    await User.deleteOne({ name: userId });
+    let result: any = await User.deleteOne({ name: userId });
+    // console.log(result);
+    if (result?.deletedCount === 0) throw new Error("No matching user found");
   } catch (err: any) {
-    return res.status(400).send(err);
+    return res.status(400).send(err.message);
   }
   return res.send(`Sucessfully deleted ${userId}`);
 };
