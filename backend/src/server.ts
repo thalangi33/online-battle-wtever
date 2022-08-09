@@ -1,18 +1,27 @@
-const express = require("express");
+import express, { Request, Response } from "express";
+import cors from "cors";
+import * as dotenv from "dotenv";
+import conn from "db/conn";
+import users from "routes/users";
+
+const PORT = process.env.PORT || 8080;
 const app = express();
-const cors = require("cors");
-require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
-// app.use(require("./routes/record"));
-// get driver connection
-const dbo = require("./db/conn");
+dotenv.config();
 
-app.listen(port, () => {
+// Testing api for basic server function
+app.get("/test", (req: Request, res: Response) => {
+  console.log("/test get request received!");
+  res.send(`<h1>Success</h1>`);
+});
+
+app.use("/users", users);
+
+app.listen(PORT, () => {
   // perform a database connection when server starts
-  // dbo.connectToServer(function (err: any) {
-  //   if (err) console.error(err);
-  // });
-  console.log(`Server is running on port: ${port}`);
+  conn.connectToServer((err: any) => {
+    if (err) console.error(err);
+  });
+  console.log(`Server is running on port: ${PORT}`);
 });

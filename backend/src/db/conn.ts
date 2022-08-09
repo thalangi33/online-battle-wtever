@@ -1,25 +1,27 @@
-// const { MongoClient } = require("mongodb");
-// const Db = process.env.ATLAS_URI;
-// const client = new MongoClient(Db, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
+import mongoose from "mongoose";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-// var _db: any;
+let _db: mongoose.Connection;
+const DB = process.env.DB;
 
-// module.exports = {
-//   connectToServer: function (callback: any) {
-//     client.connect(function (err: any, db: any) {
-//       // Verify we got a good "db" object
-//       if (db) {
-//         _db = db.db("employees");
-//         console.log("Successfully connected to MongoDB.");
-//       }
-//       return callback(err);
-//     });
-//   },
+const conn = {
+  connectToServer: async (callback: Function) => {
+    //Set up default mongoose connection
+    let mongoDB: any = process.env.MONGODB_URI;
+    let options: mongoose.ConnectOptions = {
+      dbName: DB,
+    };
+    try {
+      const dbo = await mongoose.connect(mongoDB, options);
+      _db = dbo.connection;
+      console.log(`Successfully connect to ${DB}`);
+    } catch (err: any) {
+      callback(err);
+    }
+  },
 
-//   getDb: function () {
-//     return _db;
-//   },
-// };
+  getDb: () => _db,
+};
+
+export default conn;
