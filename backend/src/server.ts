@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import conn from "db/conn";
-import users from "routes/users";
+import users from "routes/userRoute";
 
 const PORT = process.env.PORT || 8080;
 const app = express();

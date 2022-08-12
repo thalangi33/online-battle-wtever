@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import User, { IUser } from "models/userModel";
-import { toEditorSettings } from "typescript";
 
 const createUser = async (req: Request, res: Response) => {
   const { name } = req.body;
